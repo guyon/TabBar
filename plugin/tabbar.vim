@@ -146,7 +146,11 @@ if !exists(':Tbbn')
 endif
 if !exists(':Tbp')
       command! Tbbp call <SID>Bf_Cycle(0)
-endif " %%
+endif 
+if !exists(':Tbbd')
+      command! Tbbd call <SID>Bf_DelWithD()
+endif
+" %%
 
 
 
@@ -322,6 +326,7 @@ augroup TabBar
 autocmd TabBar BufDelete   * call <SID>DEBUG('-=> BufDelete AutoCmd', 10) |call <SID>Tb_AutoUpdt(expand('<abuf>'))
 autocmd TabBar BufEnter    * call <SID>DEBUG('-=> BufEnter  AutoCmd', 10) |call <SID>Tb_AutoUpdt(-1)
 autocmd TabBar VimEnter    * call <SID>DEBUG('-=> VimEnter  AutoCmd', 10) |let g:Tb_AutoUpdt = 1 |call <SID>Tb_AutoUpdt(-1)
+augroup END
 " %%
 
 
@@ -619,6 +624,37 @@ endfunction " %%
 "-------------------"
 " Window operations "
 "-------------------"
+
+" Win_Goto_Main - goto the main editing window ~~
+function! <SID>Win_Goto_Main()
+    " move to tabbar window first, 
+    " and move up or down to ensure the window
+    " at the right place
+    
+    " if not at tabbar window, goto tabbar window first
+    if bufname("%") != "-TabBar-"
+        let l:tabbar_win_num = bufwinnr("-TabBar-")
+        exe l:tabbar_win_num . "wincmd w"
+    endif
+
+    " tabbar is opened below
+    if g:Tb_SplitBelow == 1
+        " move up
+        exe "wincmd k"
+        " find first modifiable buffer window
+"        while &modifiable == 0
+"            exe "wincmd k"
+"        endwhile
+    else
+        " move down  
+        exe "wincmd j"
+        " find first modifiable buffer window
+"        while &modifiable == 0
+"            exe "wincmd j"
+"        endwhile
+    endif
+endfunction " %%
+
 " Win_Find - Return the window number of a named buffer ~~
 " If none is found then returns -1.
 function! <SID>Win_Find(bufName)
@@ -890,7 +926,24 @@ function! <SID>Bf_DelWithD()
         if g:Tb_DBG_LVL > 0
             call <SID>DEBUG('EXIT : Bf_DelWithD not called in -TabBar-',1)
         endif
-        return
+        " delete the current buffer which calls this function
+
+        " get tabbar number of the buffer (search from g:Tb_VimBufList string)
+        let l:tabbar_num_list = matchlist(g:Tb_VimBufList, '\[\(\d\+\):' . expand("%:t") . "\]\\\*")
+
+        call <SID>DEBUG('l:tabbar_num_list = ' . string(l:tabbar_num_list),10)
+        " find filename, assign first pattern
+        if l:tabbar_num_list != []
+            let l:selected_buf = l:tabbar_num_list[1]
+        " not find filename, only one file in the buffer, so it must be "1"
+        else
+            " let l:selected_buf = expand("%:t")
+            let l:selected_buf = 1
+        endif
+        " move to previous buffer
+        exe "Tbbp"
+    else
+        let l:selected_buf  =  <SID>Bf_Choosed()
     endif
 
     let l:selected_buf  =  <SID>Bf_Choosed()
@@ -1013,6 +1066,8 @@ function! <SID>Bf_DelWithD()
     if g:Tb_DBG_LVL > 0
         call <SID>DEBUG('EXIT : Bf_DelWithD() g:Tb_VimBufList =['. g:Tb_VimBufList.'] g:Tb_BufferMap=['.g:Tb_BufferMap.']',10)
     endif
+
+    call <SID>Win_Goto_Main()
 endfunction " %%
 
 
@@ -1237,7 +1292,7 @@ endfunction " %%
 
 " Bf_SwitchTo      Switch to bufNum( parameter) buffer~~
 function! <SID>Bf_SwitchTo( bufNum)
-
+    call <SID>Win_Goto_Main()
     let l:vimbuf = <SID>Map_Get_key( a:bufNum )
     exec "b!" . l:vimbuf
 endfunction " %%
