@@ -1694,6 +1694,19 @@ endfunc " %%
 "````````````````````````````````````````````````````````````````
 " %%
 
+" handle tabbar open window problem
+command! -bang -nargs=? -complete=file E call <SID>Wrapper_Edit(<f-args>)
+function <SID>Wrapper_Edit(filename)
+    " echo a:filename
+    if getbufvar(a:filename, "&buftype") != "nofile"
+        " open file below or above tabbar
+        call <SID>Win_Goto_Main()
+        exe "e ". a:filename
+    endif
+endfunction
+
+" autocmd  BufWinEnter	* call <SID>Wrapper_Edit(expand('<amatch>'))
+
 " BUGFIX:
 " 0.7. Removed mapping to <tt>, to avoid delayed response to <<
 " 0.6. Fixed the "delete with d" bug.
