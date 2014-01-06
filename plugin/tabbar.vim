@@ -419,7 +419,9 @@ function! <SID>Tb_Start(sticky, delBufNum)
     call <SID>Bf_SafePrint(a:delBufNum)
 
     if (l:curBuf != -1)
-        call search('\['.l:curBuf.':'.expand('#'.l:curBuf.':t').'\]')
+       " call search('\['.l:curBuf.':'.expand('#'.l:curBuf.':t').'\]')
+       " escape some characters
+        call search(escape('\['.l:curBuf.':'.expand('#'.l:curBuf.':t').'\]', '\\/.*$^~[]'))
     else
         call <SID>DEBUG('Tb_Start: No current buffer to search for',9)
     endif
@@ -569,10 +571,12 @@ function! <SID>Tb_AutoUpdt(delBufNum)
                 endif
 
                 " go back to the working buffer
-                if (bufname('%') == '-TabBar-')
+                if bufname("%") == "-TabBar-"
                     wincmd p
                 endif
             else
+                " build tabbar list anyway
+                let l:ListChanged = <SID>Bf_BuildList(a:delBufNum, 0)
                 if g:Tb_DBG_LVL > 0
                     call <SID>DEBUG('Tb_AutoUpdt: Failed in eligible check', 9)
                 endif
@@ -1167,7 +1171,7 @@ function! <SID>Bf_BuildList(delBufNum, updateBufList)
         " Otherwise, continue.
         if (a:delBufNum == -1 || l:i != a:delBufNum)
             " Make sure the buffer in question is listed.
-            if(getbufvar(l:i, '&buflisted') == 1)
+            if(getbufvar(l:i, '&buflisted') == 1 && getbufvar(l:i, '&filetype') != 'conque_term') 
                 " Get the name of the buffer.
                 let l:BufName = bufname(l:i)
                 " Check to see if the buffer is a blank or not. If the buffer does have
@@ -1175,12 +1179,12 @@ function! <SID>Bf_BuildList(delBufNum, updateBufList)
                 if(strlen(l:BufName))
                     " Only show modifiable buffers (The idea is that we don't
                     " want to show Explorers)
-                    if (getbufvar(l:i, '&modifiable') == 1 && BufName != '-TabBar-')
+                    if (getbufvar(l:i, '&modifiable') == 1 && BufName != '-TabBar-' && BufName != '__Calendar')
                         " Get filename & Remove []'s & ()'s
                         let l:shortBufName = fnamemodify(l:BufName, ":t")
                         let l:shortBufName = substitute(l:shortBufName, '[][()]', '', 'g')
                         let l:y =l:y +1
-                        let g:Tb_BufferMap=g:Tb_BufferMap . l:y . "-" . l:i . "\r"
+                        let g:Tb_BufferMap=g:Tb_BufferMap . l:y . "-" . l:i . "\t"
                         let l:tab = '['.l:y.':'.l:shortBufName." ]"
 
                         " If the buffer is open in a window mark it
@@ -1209,6 +1213,8 @@ function! <SID>Bf_BuildList(delBufNum, updateBufList)
         endif
     endwhile
 
+    call <SID>DEBUG("g:Tb_VimBufList = " . g:Tb_VimBufList, 10)
+    call <SID>DEBUG("l:fileNames = " . l:fileNames, 10)
     if (g:Tb_VimBufList != l:fileNames)
         if (a:updateBufList)
             let g:Tb_VimBufList = l:fileNames
@@ -1262,7 +1268,7 @@ function! <SID>Bf_Eligible(delBufNum)
     " Otherwise, continue.
     if (a:delBufNum == -1 || l:i != a:delBufNum)
       " Make sure the buffer in question is listed.
-      if (getbufvar(l:i, '&buflisted') == 1)
+      if (getbufvar(l:i, '&buflisted') == 1 && getbufvar(l:i, '&filetype') != 'conque_term')
         " Get the name of the buffer.
         let l:BufName = bufname(l:i)
         " Check to see if the buffer is a blank or not. If the buffer does have
@@ -1331,7 +1337,7 @@ function! <SID>Bf_CrSel()
 
     " If we are in the buffer explorer or in a nonmodifiable buffer with
     " g:Tb_ModSelTarget set then try another window (a few times)
-    if bufname('%') == '-TabBar-' || (g:Tb_ModSelTarget == 1 && getbufvar(bufnr('%'), '&modifiable') == 0)
+    if bufname('%') == '-TabBar-' || (g:Tb_ModSelTarget == 1 && getbufvar(bufnr('%'), '&modifiable') == 0 && getbufvar(bufnr('%', '&filetype') != 'conque_term') == 0)
       wincmd w
       if bufname('%') == '-TabBar-' || (g:Tb_ModSelTarget == 1 && getbufvar(bufnr('%'), '&modifiable') == 0)
         wincmd w
@@ -1407,7 +1413,7 @@ function! <SID>Bf_Cycle(forward)
     " Skip any non-modifiable buffers, but don't cycle forever
     " This should stop us from stopping in any of the [Explorers]
     " FIXME: infite loop
-    while getbufvar(l:curBuf, '&modifiable') == 0 && l:origBuf != l:curBuf
+    while (getbufvar(l:curBuf, '&modifiable') == 0 || getbufvar(l:curBuf, '&filetype') == 'conque_term') && l:origBuf != l:curBuf
         if (a:forward == 1)
             bn!
         else
@@ -1427,16 +1433,16 @@ endfunction " %%
 " idx: the number displayed in tabbar [idx:fooBar.txt]
 " key: the buffer number in which idx is hold
 function! <SID>Map_Get_key( idx )
-    let l:i=matchstr( g:Tb_BufferMap, a:idx . "-[0-9]*\r" )
+    let l:i=matchstr( g:Tb_BufferMap, a:idx . "-[0-9]*\t" )
     let l:x=substitute (l:i , a:idx ."-", "","")
-    let l:x=substitute (l:x , "\r", "","")
+    let l:x=substitute (l:x , "\t", "","")
     return l:x
 endfunction
 
 function! <SID>Map_Get_idx( key )
-    let l:i=matchstr( g:Tb_BufferMap, "[0-9]*-" , a:key."\r" )
+    let l:i=matchstr( g:Tb_BufferMap, "[0-9]*-" , a:key."\t" )
     let l:x=substitute (l:i , "-".a:key, "","")
-    let l:x=substitute (l:x , "\r", "","")
+    let l:x=substitute (l:x , "\t", "","")
     return l:x
 endfunction
 
