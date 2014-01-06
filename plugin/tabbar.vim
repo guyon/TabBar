@@ -21,7 +21,8 @@
 " press zM , in normal mode to CLOSE all folds
 
 " Already been loaded? ~~
-if exists('Tb_loaded')
+" Don't execute when using vimdiff or running vroom
+if exists('Tb_loaded') || &diff == 1 || exists('running_vroom')
     finish
 else
       let Tb_loaded= 1
