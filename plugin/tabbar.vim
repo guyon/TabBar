@@ -922,7 +922,6 @@ function! <SID>Bf_DelWithD()
         let l:selected_buf  =  <SID>Bf_Choosed()
     endif
 
-    let l:selected_buf  =  <SID>Bf_Choosed()
     let l:selected_buf  =  <SID>Map_Get_key( l:selected_buf )
     if g:Tb_DBG_LVL > 0
         call <SID>DEBUG('Bf_DelWithD: l:selected_buf=['.l:selected_buf.']',5)
