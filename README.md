@@ -15,3 +15,20 @@ http://photos1.blogger.com/blogger/4648/1229/1600/winxp.jpg
 
 and gvim on linux+ion3
 http://photos1.blogger.com/blogger/4648/1229/1600/screen.1.jpg
+
+
+Patched Functions
+-----------------
+1. Guess correct editing window after open/close/switch a buffer
+2. Close buffer on the current buffer window ("Tbbd" command)
+3. "E" command for more checking after open a buffer
+
+Mappings
+--------
+I add the following mapping for convenience in my *.vimrc*.
+
+```vim
+map bd <ESC>:Tbbd<CR>
+map <C-n> <ESC>:Tbbn<CR>
+map <C-p> <ESC>:Tbbp<CR>
+```
