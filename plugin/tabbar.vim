@@ -369,6 +369,9 @@ function! <SID>Tb_Start(sticky, delBufNum)
     " We don't want the mouse to change focus without a click
     set nomousefocus
 
+    " Keeps the TabBar window size when resizing the whole application
+    set winfixheigh
+
     " If folks turn numbering and columns on by default we will turn
     " them off for the -TabBar- window
     setlocal foldcolumn=0
