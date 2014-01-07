@@ -23,6 +23,12 @@ Patched Functions
 2. Close buffer on the current buffer window ("Tbbd" command)
 3. "E" command for more checking after open a buffer
 
+Fixed Bugs
+----------
+1. The regular expression of close buffer matching is not good enough, so that  
+if you want to close a "index.js" file while "index.js" and "..index.js" are open,  
+it will cause endless function calls.
+
 Mappings
 --------
 I add the following mapping for convenience in my *.vimrc*.
