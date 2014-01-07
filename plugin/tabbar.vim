@@ -1179,7 +1179,7 @@ function! <SID>Bf_BuildList(delBufNum, updateBufList)
                 if(strlen(l:BufName))
                     " Only show modifiable buffers (The idea is that we don't
                     " want to show Explorers)
-                    if (getbufvar(l:i, '&modifiable') == 1 && BufName != '-TabBar-' && BufName != '__Calendar')
+                    if (getbufvar(l:i, '&modifiable') == 1 && BufName != '-TabBar-' && BufName != '__Calendar' && getbufvar(l:i, '&buftype') != 'nofile')
                         " Get filename & Remove []'s & ()'s
                         let l:shortBufName = fnamemodify(l:BufName, ":t")
                         let l:shortBufName = substitute(l:shortBufName, '[][()]', '', 'g')
