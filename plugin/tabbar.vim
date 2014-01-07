@@ -360,7 +360,7 @@ function! <SID>Tb_Start(sticky, delBufNum)
     set nomousefocus
 
     " Keeps the TabBar window size when resizing the whole application
-    set winfixheigh
+    set winfixheight
 
     " If folks turn numbering and columns on by default we will turn
     " them off for the -TabBar- window
