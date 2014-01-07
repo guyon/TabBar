@@ -57,7 +57,7 @@ endif" %%
 if ! hasmapto('1') || !hasmapto('<M-1>')
       "gui bindings containing META key, are different from terminal bindings
       if has('gui_running')
-            for num in [1,2,3,4,5,6,7,8,9,0]
+            for num in [0,1,2,3,4,5,6,7,8,9]
                 let key = num
                 let tabNum = (num == 0)? 10 : num
                 "NORMAL mode bindings for gvim
@@ -66,7 +66,8 @@ if ! hasmapto('1') || !hasmapto('<M-1>')
                 exec "inoremap <unique> <script> <M-" . num . "> <esc>:call <SID>Bf_SwitchTo(" . num . ")<CR>:<BS>a"
             endfor
       else
-            for num in [1,2,3,4,5,6,7,8,9,0]
+			let mac_key = ["º", "¡", "™", "£", "¢", "∞", "§", "¶", "•", "ª"]
+            for num in [0,1,2,3,4,5,6,7,8,9]
                 let key = num
                 let tabNum = (num == 0)? 10 : num
                 "NORMAL mode bindings for vim( terminal)
@@ -74,7 +75,11 @@ if ! hasmapto('1') || !hasmapto('<M-1>')
                 "INSERT mode bindings for vim( terminal)
                 exec "inoremap <unique> <script> " . key ." <esc>:call <SID>Bf_SwitchTo(" . tabNum .")<CR>:<BS>a"
 
-                ""
+				let key = mac_key[num]
+                "NORMAL mode bindings for mac
+                exec "noremap <unique> <script> " . key . " :call <SID>Bf_SwitchTo(" . tabNum . ")<CR>:<BS>"
+                "INSERT mode bindings for mac
+                exec "inoremap <unique> <script> " . key ." <esc>:call <SID>Bf_SwitchTo(" . tabNum .")<CR>:<BS>a"
             endfor
       endif
 endif " %%
