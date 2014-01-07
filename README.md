@@ -16,6 +16,15 @@ http://photos1.blogger.com/blogger/4648/1229/1600/winxp.jpg
 and gvim on linux+ion3
 http://photos1.blogger.com/blogger/4648/1229/1600/screen.1.jpg
 
+Known Supported Environments
+----------------------------
+- Windows:
+    - GVim
+- Linux:
+    - GVim
+    - Terminal (Gnome Terminal)
+- Mac:
+    - Terminal (iTerm)
 
 Patched Functions
 -----------------
