@@ -142,10 +142,10 @@ if !exists(':TbToggle')
 endif
 
 if !exists(':Tbbn')
-      command! Tbbn call <SID>Bf_Cycle(1)
+      command! Tbbn call <SID>Bf_Next()
 endif
-if !exists(':Tbp')
-      command! Tbbp call <SID>Bf_Cycle(0)
+if !exists(':Tbbp')
+      command! Tbbp call <SID>Bf_Prev()
 endif 
 if !exists(':Tbbd')
       command! Tbbd call <SID>Bf_DelWithD()
@@ -1303,6 +1303,15 @@ function! <SID>Bf_SwitchTo( bufNum)
     exec "b!" . l:vimbuf
 endfunction " %%
 
+function! <SID>Bf_Next()
+    call <SID>Win_Goto_Main()
+    call <SID>Bf_Cycle(1)
+endfunction " %%
+
+function! <SID>Bf_Prev()
+    call <SID>Win_Goto_Main()
+    call <SID>Bf_Cycle(0)
+endfunction " %%
 
 " Bf_CrSel - From the -TabBar- window, open buffer under the cursor ~~
 " If we are in our explorer, then we attempt to open the buffer under the
