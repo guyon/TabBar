@@ -82,6 +82,59 @@ if ! hasmapto('1') || !hasmapto('<M-1>')
                 exec "inoremap <unique> <script> " . key ." <esc>:call <SID>Bf_SwitchTo(" . tabNum .")<CR>:<BS>a"
             endfor
       endif
+
+      "NORMAL mode bindings
+      noremap <unique> <script> <space>1 <esc>:call <SID>Bf_SwitchTo(1)<CR>:<BS>
+      noremap <unique> <script> <space>2 <esc>:call <SID>Bf_SwitchTo(2)<CR>:<BS>
+      noremap <unique> <script> <space>3 <esc>:call <SID>Bf_SwitchTo(3)<CR>:<BS>
+      noremap <unique> <script> <space>4 <esc>:call <SID>Bf_SwitchTo(4)<CR>:<BS>
+      noremap <unique> <script> <space>5 <esc>:call <SID>Bf_SwitchTo(5)<CR>:<BS>
+      noremap <unique> <script> <space>6 <esc>:call <SID>Bf_SwitchTo(6)<CR>:<BS>
+      noremap <unique> <script> <space>7 <esc>:call <SID>Bf_SwitchTo(7)<CR>:<BS>
+      noremap <unique> <script> <space>8 <esc>:call <SID>Bf_SwitchTo(8)<CR>:<BS>
+      noremap <unique> <script> <space>9 <esc>:call <SID>Bf_SwitchTo(9)<CR>:<BS>
+      noremap <unique> <script> <space>0 <esc>:call <SID>Bf_SwitchTo(10)<CR>:<BS>
+      noremap <unique> <script> <space><space>1 <esc>:call <SID>Bf_SwitchTo(11)<CR>:<BS>
+      noremap <unique> <script> <space><space>2 <esc>:call <SID>Bf_SwitchTo(12)<CR>:<BS>
+      noremap <unique> <script> <space><space>3 <esc>:call <SID>Bf_SwitchTo(13)<CR>:<BS>
+      noremap <unique> <script> <space><space>4 <esc>:call <SID>Bf_SwitchTo(14)<CR>:<BS>
+      noremap <unique> <script> <space><space>5 <esc>:call <SID>Bf_SwitchTo(15)<CR>:<BS>
+      noremap <unique> <script> <space><space>6 <esc>:call <SID>Bf_SwitchTo(16)<CR>:<BS>
+      noremap <unique> <script> <space><space>7 <esc>:call <SID>Bf_SwitchTo(17)<CR>:<BS>
+      noremap <unique> <script> <space><space>8 <esc>:call <SID>Bf_SwitchTo(18)<CR>:<BS>
+      noremap <unique> <script> <space><space>9 <esc>:call <SID>Bf_SwitchTo(19)<CR>:<BS>
+      noremap <unique> <script> <space><space>0 <esc>:call <SID>Bf_SwitchTo(20)<CR>:<BS>
+      noremap <unique> <script> <space><space><space>1 <esc>:call <SID>Bf_SwitchTo(21)<CR>:<BS>
+      noremap <unique> <script> <space><space><space>2 <esc>:call <SID>Bf_SwitchTo(22)<CR>:<BS>
+      noremap <unique> <script> <space><space><space>3 <esc>:call <SID>Bf_SwitchTo(23)<CR>:<BS>
+      noremap <unique> <script> <space><space><space>4 <esc>:call <SID>Bf_SwitchTo(24)<CR>:<BS>
+      noremap <unique> <script> <space><space><space>5 <esc>:call <SID>Bf_SwitchTo(25)<CR>:<BS>
+      noremap <unique> <script> <space><space><space>6 <esc>:call <SID>Bf_SwitchTo(26)<CR>:<BS>
+      noremap <unique> <script> <space><space><space>7 <esc>:call <SID>Bf_SwitchTo(27)<CR>:<BS>
+      noremap <unique> <script> <space><space><space>8 <esc>:call <SID>Bf_SwitchTo(28)<CR>:<BS>
+      noremap <unique> <script> <space><space><space>9 <esc>:call <SID>Bf_SwitchTo(29)<CR>:<BS>
+      noremap <unique> <script> <space><space><space>0 <esc>:call <SID>Bf_SwitchTo(30)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space>1 <esc>:call <SID>Bf_SwitchTo(31)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space>2 <esc>:call <SID>Bf_SwitchTo(32)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space>3 <esc>:call <SID>Bf_SwitchTo(33)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space>4 <esc>:call <SID>Bf_SwitchTo(34)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space>5 <esc>:call <SID>Bf_SwitchTo(35)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space>6 <esc>:call <SID>Bf_SwitchTo(36)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space>7 <esc>:call <SID>Bf_SwitchTo(37)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space>8 <esc>:call <SID>Bf_SwitchTo(38)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space>9 <esc>:call <SID>Bf_SwitchTo(39)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space>0 <esc>:call <SID>Bf_SwitchTo(40)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space><space>1 <esc>:call <SID>Bf_SwitchTo(41)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space><space>2 <esc>:call <SID>Bf_SwitchTo(42)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space><space>3 <esc>:call <SID>Bf_SwitchTo(43)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space><space>4 <esc>:call <SID>Bf_SwitchTo(44)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space><space>5 <esc>:call <SID>Bf_SwitchTo(45)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space><space>6 <esc>:call <SID>Bf_SwitchTo(46)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space><space>7 <esc>:call <SID>Bf_SwitchTo(47)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space><space>8 <esc>:call <SID>Bf_SwitchTo(48)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space><space>9 <esc>:call <SID>Bf_SwitchTo(49)<CR>:<BS>
+      noremap <unique> <script> <space><space><space><space><space>0 <esc>:call <SID>Bf_SwitchTo(50)<CR>:<BS>
+
 endif " %%
 
 
